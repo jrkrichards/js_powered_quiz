@@ -28,12 +28,32 @@
           <div class="col-md-12">
             <div class="card mt-2">
               <div class="card-body">
+                <!-- Start of highscore and timer row -->
+                <div class="row col-md-12">
+                    <a href="#" class="col-md-4 badge badge-primary">View Highscores</a>
+                    <div class="col"></div>
+                    <div class="col" id="timer">Timer</div>
+                </div>
+                <!-- start of coding quiz -->
                 <h1 class="border-bottom border-dark">Coding Quiz</h1>
                 <div class="row">
-                  <div class="col-md-12 text-center" id="questions">
-                      Questions
-                  </div>
-                    
+                  <div class="col-md-12 text-left" id="questions">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia asperiores ullam dolore ipsam autem doloribus deserunt fugit, odit deleniti iure? Repudiandae corporis fugit incidunt corrupti tempora earum, praesentium suscipit. Similique?
+                  
+                    </div>
+                    <!-- Start of Answers -->
+                    <div class="col-md-12 text-left pt-3" id="answers">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="answer_a">Answer A</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="answer_b">Answer B</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="answer_c">Answer C</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="answer_d">Answer D</button>
+                    </div>
+                    <!-- Section that will pop up to say if the answer was right or wrong -->
+                    <div class="col-md-12 pt-3">
+                        <section class="border-top border-dark text-left font-italic" id="response">
+                            Right/wrong
+                        </section>
+                    </div>
                 </div>
               </div>
             </div>
