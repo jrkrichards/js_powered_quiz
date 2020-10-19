@@ -8,6 +8,7 @@ let ansB = document.querySelector('#answer_b')
 let ansC = document.querySelector('#answer_c')
 let ansD = document.querySelector('#answer_d')
 let quesResponse = document.querySelector('#response')
+let startQs = document.querySelector('#startQs')
 
 // Variables for functions
 let secondsLeft = 120
@@ -53,6 +54,13 @@ console.log(question4.answerB)
 console.log(question5.answerD)
 
 // Functions
+function startQuiz(event) {
+    if (event.target.matches("button")) {
+        console.log("Clicked Start")
+        setTime();
+    }
+
+}
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
@@ -67,6 +75,5 @@ function setTime() {
   }
 
 // Calling functions
-setTime();
-
+startQs.addEventListener("click", startQuiz);
 // Other Scripts
