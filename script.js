@@ -68,10 +68,8 @@ function startQuiz(event) {
         ansDiv.appendChild(ansA)
         ansDiv.appendChild(ansB)
         ansDiv.appendChild(ansC)
-        ansDiv.appendChild(ansD)
-        
+        ansDiv.appendChild(ansD)   
     }
-
 }
 function questionFunc() {
     let i = 0
