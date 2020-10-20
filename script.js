@@ -2,9 +2,10 @@
 let hsLink = document.querySelector('#highscores');
 let timeEl = document.querySelector('#timer');
 let questions = document.querySelector('#questions');
-let ansAll = document.querySelector('#answers');
+let ansSec = document.querySelector('#answer_sec');
 let quesResponse = document.querySelector('#response');
 let startBtn = document.querySelector('#startBtn')
+let ansDiv = document.querySelector('#answers')
 
 // Variables for functions
 let secondsLeft = 120
@@ -35,22 +36,27 @@ let quesArray = [
     answerC: "Javascript",
     answerD: "All of the above"},
 ];
+let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
 let ansC = document.createElement('button');
 let ansD = document.createElement('button');
 
-console.log(question1.answerA)
-console.log(question2.answerC)
-console.log(question3.answerA)
-console.log(question4.answerB)
-console.log(question5.answerD)
+console.log(quesArray[0].answerA)
+console.log(quesArray[1].answerC)
+console.log(quesArray[2].answerA)
+console.log(quesArray[3].answerB)
+console.log(quesArray[4].answerD)
 
 // Style elements
 ansA.setAttribute("Class", "btn btn-primary btn-lg btn-block")
 ansB.setAttribute("Class", "btn btn-primary btn-lg btn-block")
 ansC.setAttribute("Class", "btn btn-primary btn-lg btn-block")
 ansD.setAttribute("Class", "btn btn-primary btn-lg btn-block")
+ansA.setAttribute("id", "answer_a")
+ansB.setAttribute("id", "answer_b")
+ansC.setAttribute("id", "answer_c")
+ansD.setAttribute("id", "answer_d")
 
 // Functions
 function startQuiz(event) {
@@ -59,19 +65,30 @@ function startQuiz(event) {
         setTime();
         questionFunc();
         startBtn.style.display = 'none';
+        ansDiv.appendChild(ansA)
+        ansDiv.appendChild(ansB)
+        ansDiv.appendChild(ansC)
+        ansDiv.appendChild(ansD)
+        
     }
 
 }
 function questionFunc() {
-    questions.textContent = question1.question;
-    ansAll.appendChild(ansA)
-    ansAll.appendChild(ansB)
-    ansAll.appendChild(ansC)
-    ansAll.appendChild(ansD)
-    ansA.textContent = question1.answerA;
-    ansB.textContent = question1.answerB;
-    ansC.textContent = question1.answerC;
-    ansD.textContent = question1.answerD;
+    let i = 0
+    questions.textContent = quesArray[i].question;
+    ansA.textContent = quesArray[i].answerA;
+    ansB.textContent = quesArray[i].answerB;
+    ansC.textContent = quesArray[i].answerC;
+    ansD.textContent = quesArray[i].answerD;
+    ansDiv.addEventListener('click', function() {
+        if(event.target.id === ansArray[i]) {
+            quesResponse.textContent = "Right!"
+        }
+        else {
+            quesResponse.textContent = "Wrong!"
+            secondsLeft = secondsLeft-10;
+        }
+    });          
 }
 function setTime() {
     let timerInterval = setInterval(function() {
@@ -88,4 +105,5 @@ function setTime() {
 
 // Calling functions
 startBtn.addEventListener("click", startQuiz);
+
 // Other Scripts
