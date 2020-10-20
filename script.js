@@ -8,41 +8,33 @@ let startBtn = document.querySelector('#startBtn')
 
 // Variables for functions
 let secondsLeft = 120
-let question1 = {
-    question: "Bootstrap helps with?",
+let quesArray = [
+    {question: "Bootstrap helps with?",
     answerA: "Styling",
     answerB: "Functions",
     answerC: "Objects",
-    answerD: "Tying shoelaces"
-};
-let question2 = {
-    question: "To have a variable set in the local scope what is used?",
+    answerD: "Tying shoelaces"},
+    {question: "To have a variable set in the local scope what is used?",
     answerA: "Var",
     answerB: "Function",
     answerC: "Let",
-    answerD: "Console"
-};
-let question3 = {
-    question: "To have a variable set in the global scope what is used?",
+    answerD: "Console"},
+    {question: "To have a variable set in the global scope what is used?",
     answerA: "Var",
     answerB: "Function",
     answerC: "Let",
-    answerD: "Console"
-};
-let question4 = {
-    question: "What data type is used to tell if something is true or false?",
+    answerD: "Console"},
+    {question: "What data type is used to tell if something is true or false?",
     answerA: "Integer",
     answerB: "Boolean",
     answerC: "String",
-    answerD: "Array"
-};
-let question5 = {
-    question: "What coding language is needed to make a web application?",
+    answerD: "Array"},
+    {question: "What coding language is needed to make a web application?",
     answerA: "CSS",
     answerB: "HTML",
     answerC: "Javascript",
-    answerD: "All of the above"
-};
+    answerD: "All of the above"},
+];
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
 let ansC = document.createElement('button');
