@@ -9,7 +9,7 @@ const ansDiv = document.querySelector('#answers')
 const title = document.querySelector('#quizTitle')
 
 // Variables for functions
-let secondsLeft = 120
+let secondsLeft = 3
 let quesArray = [
     {question: "Bootstrap helps with?",
     answerA: "Styling",
@@ -25,9 +25,9 @@ let quesArray = [
     correct: "answer_c"},
     {question: "To have a variable set in the global scope what is used?",
     answerA: "Var",
-    answerB: "Function",
-    answerC: "Let",
-    answerD: "Console",
+    answerB: "Let",
+    answerC: "Console",
+    answerD: "Function",
     correct: "answer_a"},
     {question: "What data type is used to tell if something is true or false?",
     answerA: "Integer",
@@ -48,7 +48,7 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 const SCORE_POINTS = 100
-const MAX_QUESTIONS = 1
+const MAX_QUESTIONS = 5
 let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
@@ -69,6 +69,7 @@ ansC.setAttribute("id", "answer_c")
 ansD.setAttribute("id", "answer_d")
 userSubmit.setAttribute("Class", "btn btn-primary btn-md")
 userSubmit.setAttribute("id", "userSub")
+
 // Functions
 function startQuiz(event) {
     event.preventDefault();
@@ -89,7 +90,6 @@ function startQuiz(event) {
 }
 function getNewQuestion() {
     // if no questions or finished all questions go to end page add this back after
-    console.log(questionCounter)
     if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem('mostRecentScore', score)
         setTimeout(() => {
@@ -97,9 +97,7 @@ function getNewQuestion() {
         }, 1000)
     }
     else {
-        questionCounter++
-
-        const questionIndex = questionCounter-1
+        const questionIndex = questionCounter
         currentQuestion = availableQuestions[questionIndex]
         questions.textContent = currentQuestion.question;
         ansA.textContent = currentQuestion.answerA;
@@ -110,6 +108,7 @@ function getNewQuestion() {
         let choices = [currentQuestion.answerA, currentQuestion.answerB, currentQuestion.answerC, currentQuestion.answerD]
         console.log(choices)
         acceptingAnswers = true
+        questionCounter++
     }
 };
 
@@ -120,7 +119,6 @@ function checkAnswer (event) {
         acceptingAnswers = false
         const selectedChoice = event.target.id
         const correctAnswer = currentQuestion.correct
-        console.log(correctAnswer)
         if(selectedChoice === correctAnswer) {
             quesResponse.textContent = "Right!";
             incrementScore(SCORE_POINTS);
@@ -154,6 +152,12 @@ function nameInput() {
     quesResponse.textContent = "Congrats on finishing!"
 }
 
+// ENDED HERE NEED TO SAVE USERNAME AND SCORE TO LOCAL STORE AND CREATE HIGHLIGHTS PAGE
+function logScore (event) {
+    event.preventDefault();
+    console.log(localStorage.getItem('mostRecentScore'))
+}
+
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
@@ -161,6 +165,7 @@ function setTime() {
   
       if(secondsLeft === 0 || secondsLeft < 0) {
         clearInterval(timerInterval);
+        nameInput();
         console.log("Done");
       }
   
@@ -170,5 +175,5 @@ function setTime() {
 // Event Listeners
 startBtn.addEventListener("click", startQuiz);
 ansDiv.addEventListener("click", checkAnswer);
-
+userSubmit.addEventListener("click", logScore)
 // Other Scripts
