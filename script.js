@@ -63,7 +63,7 @@ function startQuiz(event) {
     if (event.target.matches("button")) {
         console.log("Clicked Start")
         setTime();
-        questionFunc();
+        questionFunc1();
         startBtn.style.display = 'none';
         ansDiv.appendChild(ansA)
         ansDiv.appendChild(ansB)
@@ -71,20 +71,50 @@ function startQuiz(event) {
         ansDiv.appendChild(ansD)   
     }
 }
-function questionFunc() {
-    let i = 0
-    questions.textContent = quesArray[i].question;
-    ansA.textContent = quesArray[i].answerA;
-    ansB.textContent = quesArray[i].answerB;
-    ansC.textContent = quesArray[i].answerC;
-    ansD.textContent = quesArray[i].answerD;
+function questionFunc1() {
+    questions.textContent = quesArray[0].question;
+    ansA.textContent = quesArray[0].answerA;
+    ansB.textContent = quesArray[0].answerB;
+    ansC.textContent = quesArray[0].answerC;
+    ansD.textContent = quesArray[0].answerD;
     ansDiv.addEventListener('click', function() {
-        if(event.target.id === ansArray[i]) {
-            quesResponse.textContent = "Right!"
+        if(event.target.id === ansArray[0]) {
+            quesResponse.textContent = "Right!";
+            questionFunc2();
         }
         else {
-            quesResponse.textContent = "Wrong!"
-            secondsLeft = secondsLeft-10;
+            if(secondsLeft > 10){
+                quesResponse.textContent = "Wrong!"
+                secondsLeft = secondsLeft-10;
+                questionFunc2();
+            }
+            else {
+                console.log("need to create ending func")
+            }
+        }
+    });          
+}
+function questionFunc2() {
+    questions.textContent = quesArray[1].question;
+    ansA.textContent = quesArray[1].answerA;
+    ansB.textContent = quesArray[1].answerB;
+    ansC.textContent = quesArray[1].answerC;
+    ansD.textContent = quesArray[1].answerD;
+    ansDiv.addEventListener('click', function() {
+        if(event.target.id === ansArray[1]) {
+            console.log(event.target.id)
+            quesResponse.textContent = "Right!";
+            
+        }
+        else {
+            if(secondsLeft > 10){
+                quesResponse.textContent = "Wrong!"
+                secondsLeft = secondsLeft-10;
+                
+            }
+            else {
+                console.log("need to create ending func")
+            }
         }
     });          
 }
