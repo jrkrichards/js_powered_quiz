@@ -69,14 +69,18 @@ ansA.setAttribute("id", "answer_a")
 ansB.setAttribute("id", "answer_b")
 ansC.setAttribute("id", "answer_c")
 ansD.setAttribute("id", "answer_d")
-
+console.log(quesArray.length)
+console.log(Math.floor(Math.random() * quesArray.length))
 // Functions
 function startQuiz(event) {
     event.preventDefault();
     if (event.target.matches("button")) {
-        console.log("Clicked Start")
         setTime();
-        questionFunc1();
+        questionCounter = 0
+        score = 0
+        availableQuestions = [...quesArray]
+        getNewQuestion();
+        // questionFunc1();
         startBtn.style.display = 'none';
         ansDiv.appendChild(ansA)
         ansDiv.appendChild(ansB)
@@ -84,126 +88,55 @@ function startQuiz(event) {
         ansDiv.appendChild(ansD)
         return;   
     }
-    else {
-        return;
-    }
 }
-function questionFunc1() {
-    let i = 0
-    questions.textContent = quesArray[i].question;
-    ansA.textContent = quesArray[i].answerA;
-    ansB.textContent = quesArray[i].answerB;
-    ansC.textContent = quesArray[i].answerC;
-    ansD.textContent = quesArray[i].answerD;
-    ansDiv.addEventListener('click', function() {
-        event.preventDefault();
-        if(event.target.id === ansArray[i]) {
-            console.log(event.target.id)
+function getNewQuestion() {
+    // if no questions or finished all questions go to end page add this back after
+    // if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
+    //     localStorage.setItem('mostRecentScore', score)
+    //     alert('Quiz Done')
+    //     // return window.location.assign('/end.html')
+    // }
+    
+    questionCounter++
+
+    const questionIndex = questionCounter-1
+    currentQuestion = availableQuestions[questionIndex]
+    questions.textContent = currentQuestion.question;
+    ansA.textContent = currentQuestion.answerA;
+    ansB.textContent = currentQuestion.answerB;
+    ansC.textContent = currentQuestion.answerC;
+    ansD.textContent = currentQuestion.answerD;
+
+    let choices = [currentQuestion.answerA, currentQuestion.answerB, currentQuestion.answerC, currentQuestion.answerD]
+    console.log(choices)
+    acceptingAnswers = true
+};
+
+function checkAnswer (event) {
+    event.preventDefault();
+        if(!acceptingAnswers) return
+
+        acceptingAnswers = false
+        const selectedChoice = event.target.id
+        const correctAnswer = currentQuestion.correct
+        console.log(correctAnswer)
+        if(selectedChoice === correctAnswer) {
             quesResponse.textContent = "Right!";
-            index = i + 1;
-            return;
+            incrementScore(SCORE_POINTS);
         }
         else {
             quesResponse.textContent = "Wrong!"
             secondsLeft = secondsLeft-10;
-            index = i + 1;
-            return;
         }
-    }); 
-    return;         
+        setTimeout(() => {
+            getNewQuestion();
+        }, 1000)
 }
-function questionFunc2() {
-    questions.textContent = quesArray[1].question;
-    ansA.textContent = quesArray[1].answerA;
-    ansB.textContent = quesArray[1].answerB;
-    ansC.textContent = quesArray[1].answerC;
-    ansD.textContent = quesArray[1].answerD;
-    ansDiv.addEventListener('click', function() {
-        event.preventDefault();
-        if(event.target.id === ansArray[1]) {
-            console.log(event.target.id + "Question 1 Right")
-            quesResponse.textContent = "Right!";
-            questionFunc3();
-            return;
-        }
-        else {
-            quesResponse.textContent = "Wrong!"
-            console.log(event.target.id + "Question 1 Wrong")
-            secondsLeft = secondsLeft-10;
-            questionFunc3();
-            return;
-        }
-    });
-    return;          
+
+function incrementScore(num) {
+    score +=num
 }
-function questionFunc3() {
-    questions.textContent = quesArray[2].question;
-    ansA.textContent = quesArray[2].answerA;
-    ansB.textContent = quesArray[2].answerB;
-    ansC.textContent = quesArray[2].answerC;
-    ansD.textContent = quesArray[2].answerD;
-    ansDiv.addEventListener('click', function() {
-        event.preventDefault();
-        if(event.target.id === ansArray[2]) {
-            console.log(event.target.id + "Question 2 Right")
-            quesResponse.textContent = "Right!";
-            questionFunc4();
-            return;
-        }
-        else {
-            quesResponse.textContent = "Wrong!"
-            console.log(event.target.id + "Question 2 wrong")
-            secondsLeft = secondsLeft-10;
-            questionFunc4();
-            return;
-        }
-    }); 
-    return;         
-}
-function questionFunc4() {
-    questions.textContent = quesArray[3].question;
-    ansA.textContent = quesArray[3].answerA;
-    ansB.textContent = quesArray[3].answerB;
-    ansC.textContent = quesArray[3].answerC;
-    ansD.textContent = quesArray[3].answerD;
-    ansDiv.addEventListener('click', function() {
-        event.preventDefault();
-        if(event.target.id === ansArray[3]) {
-            console.log(event.target.id)
-            quesResponse.textContent = "Right!";
-            questionFunc5();
-            return;
-        }
-        else {
-            quesResponse.textContent = "Wrong!"
-            secondsLeft = secondsLeft-10;
-            questionFunc5();
-            return;
-        }
-    }); 
-    return;         
-}
-function questionFunc5() {
-    questions.textContent = quesArray[4].question;
-    ansA.textContent = quesArray[4].answerA;
-    ansB.textContent = quesArray[4].answerB;
-    ansC.textContent = quesArray[4].answerC;
-    ansD.textContent = quesArray[4].answerD;
-    ansDiv.addEventListener('click', function() {
-        event.preventDefault();
-        if(event.target.id === ansArray[4]) {
-            console.log(event.target.id)
-            quesResponse.textContent = "Right!";
-            return;
-        }
-        else {
-            quesResponse.textContent = "Wrong!"
-            secondsLeft = secondsLeft - 10;
-            return;
-        }
-    }); 
-    return;         
-}
+
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
@@ -217,7 +150,8 @@ function setTime() {
     }, 1000);
   }
 
-// Calling functions
+// Event Listeners
 startBtn.addEventListener("click", startQuiz);
+ansDiv.addEventListener("click", checkAnswer);
 
 // Other Scripts
