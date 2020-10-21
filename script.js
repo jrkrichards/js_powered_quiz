@@ -68,7 +68,11 @@ function startQuiz(event) {
         ansDiv.appendChild(ansA)
         ansDiv.appendChild(ansB)
         ansDiv.appendChild(ansC)
-        ansDiv.appendChild(ansD)   
+        ansDiv.appendChild(ansD)
+        return;   
+    }
+    else {
+        return;
     }
 }
 function questionFunc1() {
@@ -81,18 +85,23 @@ function questionFunc1() {
         if(event.target.id === ansArray[0]) {
             quesResponse.textContent = "Right!";
             questionFunc2();
+            return;
         }
         else {
             if(secondsLeft > 10){
                 quesResponse.textContent = "Wrong!"
                 secondsLeft = secondsLeft-10;
                 questionFunc2();
+                return;
             }
             else {
                 console.log("need to create ending func")
+                questionFunc2();
+                return;
             }
         }
-    });          
+    }); 
+    return;         
 }
 function questionFunc2() {
     questions.textContent = quesArray[1].question;
@@ -101,22 +110,112 @@ function questionFunc2() {
     ansC.textContent = quesArray[1].answerC;
     ansD.textContent = quesArray[1].answerD;
     ansDiv.addEventListener('click', function() {
+        event.preventDefault();
         if(event.target.id === ansArray[1]) {
             console.log(event.target.id)
             quesResponse.textContent = "Right!";
-            
+            questionFunc3();
+            return;
         }
         else {
             if(secondsLeft > 10){
                 quesResponse.textContent = "Wrong!"
                 secondsLeft = secondsLeft-10;
-                
+                questionFunc3();
+                return;
             }
             else {
                 console.log("need to create ending func")
+                questionFunc3();
+                return;
             }
         }
-    });          
+    });
+    return;          
+}
+function questionFunc3() {
+    questions.textContent = quesArray[2].question;
+    ansA.textContent = quesArray[2].answerA;
+    ansB.textContent = quesArray[2].answerB;
+    ansC.textContent = quesArray[2].answerC;
+    ansD.textContent = quesArray[2].answerD;
+    ansDiv.addEventListener('click', function() {
+        if(event.target.id === ansArray[2]) {
+            console.log(event.target.id)
+            quesResponse.textContent = "Right!";
+            questionFunc4();
+            return;
+        }
+        else {
+            if(secondsLeft > 10){
+                quesResponse.textContent = "Wrong!"
+                secondsLeft = secondsLeft-10;
+                questionFunc4();
+                return;
+            }
+            else {
+                console.log("need to create ending func")
+                questionFunc4();
+                return;
+            }
+        }
+    }); 
+    return;         
+}
+function questionFunc4() {
+    questions.textContent = quesArray[3].question;
+    ansA.textContent = quesArray[3].answerA;
+    ansB.textContent = quesArray[3].answerB;
+    ansC.textContent = quesArray[3].answerC;
+    ansD.textContent = quesArray[3].answerD;
+    ansDiv.addEventListener('click', function() {
+        if(event.target.id === ansArray[3]) {
+            console.log(event.target.id)
+            quesResponse.textContent = "Right!";
+            questionFunc5();
+            return;
+        }
+        else {
+            if(secondsLeft > 10){
+                quesResponse.textContent = "Wrong!"
+                secondsLeft = secondsLeft-10;
+                questionFunc5();
+                return;
+            }
+            else {
+                console.log("need to create ending func")
+                return;
+            }
+        }
+    }); 
+    return;         
+}
+function questionFunc5() {
+    questions.textContent = quesArray[4].question;
+    ansA.textContent = quesArray[4].answerA;
+    ansB.textContent = quesArray[4].answerB;
+    ansC.textContent = quesArray[4].answerC;
+    ansD.textContent = quesArray[4].answerD;
+    ansDiv.addEventListener('click', function() {
+        if(event.target.id === ansArray[4]) {
+            console.log(event.target.id)
+            quesResponse.textContent = "Right!";
+            return;
+            
+        }
+        else {
+            if(secondsLeft > 10){
+                quesResponse.textContent = "Wrong!"
+                secondsLeft = secondsLeft - 10;
+                return;
+            }
+            else {
+                console.log("need to create ending func")
+                return;
+            }
+        }
+    }); 
+    return;         
 }
 function setTime() {
     let timerInterval = setInterval(function() {
