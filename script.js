@@ -67,7 +67,7 @@ ansA.setAttribute("id", "answer_a")
 ansB.setAttribute("id", "answer_b")
 ansC.setAttribute("id", "answer_c")
 ansD.setAttribute("id", "answer_d")
-userSubmit.setAttribute("Class", "btn btn-primary btn-md")
+userSubmit.setAttribute("Class", "btn btn-primary btn-md ml-2")
 userSubmit.setAttribute("id", "userSub")
 
 // Functions
@@ -147,12 +147,12 @@ function nameInput() {
     ansC.style.display = 'none';
     ansD.style.display = 'none';
     ansSec.appendChild(userName)
-    ansDiv.appendChild(userSubmit)
+    ansSec.appendChild(userSubmit)
     userSubmit.textContent = "Submit"
     quesResponse.textContent = "Congrats on finishing!"
 }
 
-// ENDED HERE NEED TO SAVE USERNAME AND SCORE TO LOCAL STORE AND CREATE HIGHLIGHTS PAGE
+// ENDED HERE NEED TO SAVE USERNAME AND SCORE TO LOCAL STORE AND CREATE HIGHLIGHTS PAGE when they hit submit will go to highlights page
 function logScore (event) {
     event.preventDefault();
     console.log(localStorage.getItem('mostRecentScore'))
