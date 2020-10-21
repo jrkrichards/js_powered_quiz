@@ -1,11 +1,11 @@
 // Variables from HTML file
-let hsLink = document.querySelector('#highscores');
-let timeEl = document.querySelector('#timer');
-let questions = document.querySelector('#questions');
-let ansSec = document.querySelector('#answer_sec');
-let quesResponse = document.querySelector('#response');
-let startBtn = document.querySelector('#startBtn')
-let ansDiv = document.querySelector('#answers')
+const hsLink = document.querySelector('#highscores');
+const timeEl = document.querySelector('#timer');
+const questions = document.querySelector('#questions');
+const ansSec = document.querySelector('#answer_sec');
+const quesResponse = document.querySelector('#response');
+const startBtn = document.querySelector('#startBtn')
+const ansDiv = document.querySelector('#answers')
 
 // Variables for functions
 let secondsLeft = 120
@@ -14,28 +14,40 @@ let quesArray = [
     answerA: "Styling",
     answerB: "Functions",
     answerC: "Objects",
-    answerD: "Tying shoelaces"},
+    answerD: "Tying shoelaces",
+    correct: "answer_a"},
     {question: "To have a variable set in the local scope what is used?",
     answerA: "Var",
     answerB: "Function",
     answerC: "Let",
-    answerD: "Console"},
+    answerD: "Console",
+    correct: "answer_c"},
     {question: "To have a variable set in the global scope what is used?",
     answerA: "Var",
     answerB: "Function",
     answerC: "Let",
-    answerD: "Console"},
+    answerD: "Console",
+    correct: "answer_a"},
     {question: "What data type is used to tell if something is true or false?",
     answerA: "Integer",
     answerB: "Boolean",
     answerC: "String",
-    answerD: "Array"},
+    answerD: "Array",
+    correct: "answer_b"},
     {question: "What coding language is needed to make a web application?",
     answerA: "CSS",
     answerB: "HTML",
     answerC: "Javascript",
-    answerD: "All of the above"},
+    answerD: "All of the above",
+    correct: "answer_d"},
 ];
+let currentQuestion = {};
+let acceptingAnswers = true;
+let score = 0;
+let questionCounter = 0;
+let availableQuestions = [];
+const SCORE_POINTS = 100
+const MAX_QUESTIONS = 5
 let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
@@ -60,6 +72,7 @@ ansD.setAttribute("id", "answer_d")
 
 // Functions
 function startQuiz(event) {
+    event.preventDefault();
     if (event.target.matches("button")) {
         console.log("Clicked Start")
         setTime();
@@ -76,29 +89,25 @@ function startQuiz(event) {
     }
 }
 function questionFunc1() {
-    questions.textContent = quesArray[0].question;
-    ansA.textContent = quesArray[0].answerA;
-    ansB.textContent = quesArray[0].answerB;
-    ansC.textContent = quesArray[0].answerC;
-    ansD.textContent = quesArray[0].answerD;
+    let i = 0
+    questions.textContent = quesArray[i].question;
+    ansA.textContent = quesArray[i].answerA;
+    ansB.textContent = quesArray[i].answerB;
+    ansC.textContent = quesArray[i].answerC;
+    ansD.textContent = quesArray[i].answerD;
     ansDiv.addEventListener('click', function() {
-        if(event.target.id === ansArray[0]) {
+        event.preventDefault();
+        if(event.target.id === ansArray[i]) {
+            console.log(event.target.id)
             quesResponse.textContent = "Right!";
-            questionFunc2();
+            index = i + 1;
             return;
         }
         else {
-            if(secondsLeft > 10){
-                quesResponse.textContent = "Wrong!"
-                secondsLeft = secondsLeft-10;
-                questionFunc2();
-                return;
-            }
-            else {
-                console.log("need to create ending func")
-                questionFunc2();
-                return;
-            }
+            quesResponse.textContent = "Wrong!"
+            secondsLeft = secondsLeft-10;
+            index = i + 1;
+            return;
         }
     }); 
     return;         
@@ -112,23 +121,17 @@ function questionFunc2() {
     ansDiv.addEventListener('click', function() {
         event.preventDefault();
         if(event.target.id === ansArray[1]) {
-            console.log(event.target.id)
+            console.log(event.target.id + "Question 1 Right")
             quesResponse.textContent = "Right!";
             questionFunc3();
             return;
         }
         else {
-            if(secondsLeft > 10){
-                quesResponse.textContent = "Wrong!"
-                secondsLeft = secondsLeft-10;
-                questionFunc3();
-                return;
-            }
-            else {
-                console.log("need to create ending func")
-                questionFunc3();
-                return;
-            }
+            quesResponse.textContent = "Wrong!"
+            console.log(event.target.id + "Question 1 Wrong")
+            secondsLeft = secondsLeft-10;
+            questionFunc3();
+            return;
         }
     });
     return;          
@@ -140,24 +143,19 @@ function questionFunc3() {
     ansC.textContent = quesArray[2].answerC;
     ansD.textContent = quesArray[2].answerD;
     ansDiv.addEventListener('click', function() {
+        event.preventDefault();
         if(event.target.id === ansArray[2]) {
-            console.log(event.target.id)
+            console.log(event.target.id + "Question 2 Right")
             quesResponse.textContent = "Right!";
             questionFunc4();
             return;
         }
         else {
-            if(secondsLeft > 10){
-                quesResponse.textContent = "Wrong!"
-                secondsLeft = secondsLeft-10;
-                questionFunc4();
-                return;
-            }
-            else {
-                console.log("need to create ending func")
-                questionFunc4();
-                return;
-            }
+            quesResponse.textContent = "Wrong!"
+            console.log(event.target.id + "Question 2 wrong")
+            secondsLeft = secondsLeft-10;
+            questionFunc4();
+            return;
         }
     }); 
     return;         
@@ -169,6 +167,7 @@ function questionFunc4() {
     ansC.textContent = quesArray[3].answerC;
     ansD.textContent = quesArray[3].answerD;
     ansDiv.addEventListener('click', function() {
+        event.preventDefault();
         if(event.target.id === ansArray[3]) {
             console.log(event.target.id)
             quesResponse.textContent = "Right!";
@@ -176,16 +175,10 @@ function questionFunc4() {
             return;
         }
         else {
-            if(secondsLeft > 10){
-                quesResponse.textContent = "Wrong!"
-                secondsLeft = secondsLeft-10;
-                questionFunc5();
-                return;
-            }
-            else {
-                console.log("need to create ending func")
-                return;
-            }
+            quesResponse.textContent = "Wrong!"
+            secondsLeft = secondsLeft-10;
+            questionFunc5();
+            return;
         }
     }); 
     return;         
@@ -197,22 +190,16 @@ function questionFunc5() {
     ansC.textContent = quesArray[4].answerC;
     ansD.textContent = quesArray[4].answerD;
     ansDiv.addEventListener('click', function() {
+        event.preventDefault();
         if(event.target.id === ansArray[4]) {
             console.log(event.target.id)
             quesResponse.textContent = "Right!";
             return;
-            
         }
         else {
-            if(secondsLeft > 10){
-                quesResponse.textContent = "Wrong!"
-                secondsLeft = secondsLeft - 10;
-                return;
-            }
-            else {
-                console.log("need to create ending func")
-                return;
-            }
+            quesResponse.textContent = "Wrong!"
+            secondsLeft = secondsLeft - 10;
+            return;
         }
     }); 
     return;         
