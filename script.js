@@ -6,6 +6,7 @@ const ansSec = document.querySelector('#answer_sec');
 const quesResponse = document.querySelector('#response');
 const startBtn = document.querySelector('#startBtn')
 const ansDiv = document.querySelector('#answers')
+const title = document.querySelector('#quizTitle')
 
 // Variables for functions
 let secondsLeft = 120
@@ -47,18 +48,15 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 const SCORE_POINTS = 100
-const MAX_QUESTIONS = 5
+const MAX_QUESTIONS = 1
 let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
 let ansC = document.createElement('button');
 let ansD = document.createElement('button');
+let userSubmit = document.createElement('button')
+let userName = document.createElement('input')
 
-console.log(quesArray[0].answerA)
-console.log(quesArray[1].answerC)
-console.log(quesArray[2].answerA)
-console.log(quesArray[3].answerB)
-console.log(quesArray[4].answerD)
 
 // Style elements
 ansA.setAttribute("Class", "btn btn-primary btn-lg btn-block")
@@ -69,8 +67,8 @@ ansA.setAttribute("id", "answer_a")
 ansB.setAttribute("id", "answer_b")
 ansC.setAttribute("id", "answer_c")
 ansD.setAttribute("id", "answer_d")
-console.log(quesArray.length)
-console.log(Math.floor(Math.random() * quesArray.length))
+userSubmit.setAttribute("Class", "btn btn-primary btn-md")
+userSubmit.setAttribute("id", "userSub")
 // Functions
 function startQuiz(event) {
     event.preventDefault();
@@ -91,25 +89,28 @@ function startQuiz(event) {
 }
 function getNewQuestion() {
     // if no questions or finished all questions go to end page add this back after
-    // if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
-    //     localStorage.setItem('mostRecentScore', score)
-    //     alert('Quiz Done')
-    //     // return window.location.assign('/end.html')
-    // }
-    
-    questionCounter++
+    console.log(questionCounter)
+    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+        localStorage.setItem('mostRecentScore', score)
+        setTimeout(() => {
+            nameInput();
+        }, 1000)
+    }
+    else {
+        questionCounter++
 
-    const questionIndex = questionCounter-1
-    currentQuestion = availableQuestions[questionIndex]
-    questions.textContent = currentQuestion.question;
-    ansA.textContent = currentQuestion.answerA;
-    ansB.textContent = currentQuestion.answerB;
-    ansC.textContent = currentQuestion.answerC;
-    ansD.textContent = currentQuestion.answerD;
+        const questionIndex = questionCounter-1
+        currentQuestion = availableQuestions[questionIndex]
+        questions.textContent = currentQuestion.question;
+        ansA.textContent = currentQuestion.answerA;
+        ansB.textContent = currentQuestion.answerB;
+        ansC.textContent = currentQuestion.answerC;
+        ansD.textContent = currentQuestion.answerD;
 
-    let choices = [currentQuestion.answerA, currentQuestion.answerB, currentQuestion.answerC, currentQuestion.answerD]
-    console.log(choices)
-    acceptingAnswers = true
+        let choices = [currentQuestion.answerA, currentQuestion.answerB, currentQuestion.answerC, currentQuestion.answerD]
+        console.log(choices)
+        acceptingAnswers = true
+    }
 };
 
 function checkAnswer (event) {
@@ -123,10 +124,12 @@ function checkAnswer (event) {
         if(selectedChoice === correctAnswer) {
             quesResponse.textContent = "Right!";
             incrementScore(SCORE_POINTS);
+            console.log(score)
         }
         else {
             quesResponse.textContent = "Wrong!"
             secondsLeft = secondsLeft-10;
+            console.log(score)
         }
         setTimeout(() => {
             getNewQuestion();
@@ -137,12 +140,26 @@ function incrementScore(num) {
     score +=num
 }
 
+function nameInput() {
+    title.textContent = "Quiz Finished";
+    questions.textContent = "Your final score is " + score + ". Enter your username below.";
+    secondsLeft = 1
+    ansA.style.display = 'none';
+    ansB.style.display = 'none';
+    ansC.style.display = 'none';
+    ansD.style.display = 'none';
+    ansSec.appendChild(userName)
+    ansDiv.appendChild(userSubmit)
+    userSubmit.textContent = "Submit"
+    quesResponse.textContent = "Congrats on finishing!"
+}
+
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
       timeEl.textContent = "Time: " + secondsLeft;
   
-      if(secondsLeft === 0) {
+      if(secondsLeft === 0 || secondsLeft < 0) {
         clearInterval(timerInterval);
         console.log("Done");
       }
