@@ -8,6 +8,7 @@ const startBtn = document.querySelector('#startBtn')
 const ansDiv = document.querySelector('#answers')
 const title = document.querySelector('#quizTitle')
 const nameEndInput = document.querySelector('#nameEnd')
+const highScoresList = document.querySelector('#highScoresList')
 
 // Variables for functions
 let secondsLeft = 3
@@ -58,6 +59,7 @@ let ansC = document.createElement('button');
 let ansD = document.createElement('button');
 let userSubmit = document.createElement('button')
 let userName = document.createElement('input')
+let quizAgain = document.createElement('button')
 
 
 // Style elements
@@ -72,6 +74,8 @@ ansD.setAttribute("id", "answer_d")
 userSubmit.setAttribute("Class", "btn btn-primary btn-md ml-2")
 userSubmit.setAttribute("id", "userSub")
 userName.setAttribute("id", "currentUser")
+quizAgain.setAttribute("Class", "btn btn-primary btn-md ml-2")
+quizAgain.setAttribute("id", "quizAgainBut")
 
 // Functions
 function startQuiz(event) {
@@ -163,18 +167,30 @@ function logScore (event) {
     let scoreObj = {
         name: currentUser,
         score: currentScore,
-    }
-    
+    }    
     highScores.push(scoreObj);
-
     highScores.sort((a,b) => {
         return b.score - a.score
     });
     localStorage.setItem('highScores', JSON.stringify(highScores))
 
-    title.textContent = "Top 5 Highscores";
+    ansSec.appendChild(quizAgain);
+    quizAgain.textContent = "Take Quiz Again";
+    nameEndInput.textContent = "Click Take Quiz Again button to restart or Highscores button to see the scores."
     questions.style.display = "none";
+    ansA.style.display = 'none';
+    ansB.style.display = 'none';
+    ansC.style.display = 'none';
+    ansD.style.display = 'none';
+    userName.style.display = 'none';
+    userSubmit.style.display = 'none';
+}
+
+function showScores(event) {
+    event.preventDefault();
+    title.textContent = "Top 5 Highscores";
     nameEndInput.textContent = localStorage.getItem('highScores');
+    questions.style.display = "none";
     ansA.style.display = 'none';
     ansB.style.display = 'none';
     ansC.style.display = 'none';
@@ -200,5 +216,8 @@ function setTime() {
 // Event Listeners
 startBtn.addEventListener("click", startQuiz);
 ansDiv.addEventListener("click", checkAnswer);
-userSubmit.addEventListener("click", logScore)
+userSubmit.addEventListener("click", logScore);
+hsLink.addEventListener("click", showScores);
+quizAgain.addEventListener("click", startQuiz);
+
 // Other Scripts
