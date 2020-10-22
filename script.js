@@ -7,6 +7,7 @@ const quesResponse = document.querySelector('#response');
 const startBtn = document.querySelector('#startBtn')
 const ansDiv = document.querySelector('#answers')
 const title = document.querySelector('#quizTitle')
+const nameEndInput = document.querySelector('#nameEnd')
 
 // Variables for functions
 let secondsLeft = 3
@@ -49,6 +50,7 @@ let questionCounter = 0;
 let availableQuestions = [];
 const SCORE_POINTS = 100
 const MAX_QUESTIONS = 5
+const highScores = JSON.parse(localStorage.getItem('highScores')) || []
 let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
@@ -69,6 +71,7 @@ ansC.setAttribute("id", "answer_c")
 ansD.setAttribute("id", "answer_d")
 userSubmit.setAttribute("Class", "btn btn-primary btn-md ml-2")
 userSubmit.setAttribute("id", "userSub")
+userName.setAttribute("id", "currentUser")
 
 // Functions
 function startQuiz(event) {
@@ -140,8 +143,8 @@ function incrementScore(num) {
 
 function nameInput() {
     title.textContent = "Quiz Finished";
-    questions.textContent = "Your final score is " + score + ". Enter your username below.";
-    secondsLeft = 1
+    questions.style.display = "none";
+    nameEndInput.textContent = "Your final score is " + score + ". Enter your username below.";
     ansA.style.display = 'none';
     ansB.style.display = 'none';
     ansC.style.display = 'none';
@@ -152,10 +155,32 @@ function nameInput() {
     quesResponse.textContent = "Congrats on finishing!"
 }
 
-// ENDED HERE NEED TO SAVE USERNAME AND SCORE TO LOCAL STORE AND CREATE HIGHLIGHTS PAGE when they hit submit will go to highlights page
 function logScore (event) {
     event.preventDefault();
-    console.log(localStorage.getItem('mostRecentScore'))
+    localStorage.setItem('mostRecentUser', document.getElementById('currentUser').value)
+    let currentUser = localStorage.getItem('mostRecentUser')
+    let currentScore = localStorage.getItem('mostRecentScore')
+    let scoreObj = {
+        name: currentUser,
+        score: currentScore,
+    }
+    
+    highScores.push(scoreObj);
+
+    highScores.sort((a,b) => {
+        return b.score - a.score
+    });
+    localStorage.setItem('highScores', JSON.stringify(highScores))
+
+    title.textContent = "Top 5 Highscores";
+    questions.style.display = "none";
+    nameEndInput.textContent = localStorage.getItem('highScores');
+    ansA.style.display = 'none';
+    ansB.style.display = 'none';
+    ansC.style.display = 'none';
+    ansD.style.display = 'none';
+    userName.style.display = 'none';
+    userSubmit.style.display = 'none';
 }
 
 function setTime() {
