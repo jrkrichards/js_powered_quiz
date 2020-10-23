@@ -11,7 +11,7 @@ const nameEndInput = document.querySelector('#nameEnd')
 const highScoresList = document.querySelector('#highScoresUl')
 
 // Variables for functions
-let secondsLeft = 3
+let secondsLeft = 60
 let quesArray = [
     {question: "Bootstrap helps with?",
     answerA: "Styling",
