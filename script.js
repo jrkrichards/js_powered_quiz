@@ -199,6 +199,11 @@ function showScores(event) {
     userSubmit.style.display = 'none';
 }
 
+function resetQuiz(event) {
+    event.preventDefault();
+    location.reload();
+}
+
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
@@ -218,7 +223,7 @@ startBtn.addEventListener("click", startQuiz);
 ansDiv.addEventListener("click", checkAnswer);
 userSubmit.addEventListener("click", logScore);
 hsLink.addEventListener("click", showScores);
-quizAgain.addEventListener("click", startQuiz);
+quizAgain.addEventListener("click", resetQuiz);
 // make this refresh the page
 
 // Other Scripts
