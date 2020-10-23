@@ -188,7 +188,7 @@ function logScore (event) {
 
 function showScores(event) {
     event.preventDefault();
-    title.textContent = "Top 5 Highscores";
+    title.textContent = "Highscores";
     nameEndInput.textContent = localStorage.getItem('highScores');
     questions.style.display = "none";
     ansA.style.display = 'none';
@@ -219,5 +219,6 @@ ansDiv.addEventListener("click", checkAnswer);
 userSubmit.addEventListener("click", logScore);
 hsLink.addEventListener("click", showScores);
 quizAgain.addEventListener("click", startQuiz);
+// make this refresh the page
 
 // Other Scripts
