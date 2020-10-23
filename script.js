@@ -8,7 +8,7 @@ const startBtn = document.querySelector('#startBtn')
 const ansDiv = document.querySelector('#answers')
 const title = document.querySelector('#quizTitle')
 const nameEndInput = document.querySelector('#nameEnd')
-const highScoresList = document.querySelector('#highScoresList')
+const highScoresList = document.querySelector('#highScoresUl')
 
 // Variables for functions
 let secondsLeft = 3
@@ -60,6 +60,7 @@ let ansD = document.createElement('button');
 let userSubmit = document.createElement('button')
 let userName = document.createElement('input')
 let quizAgain = document.createElement('button')
+let clearScores = document.createElement('button')
 
 
 // Style elements
@@ -76,6 +77,7 @@ userSubmit.setAttribute("id", "userSub")
 userName.setAttribute("id", "currentUser")
 quizAgain.setAttribute("Class", "btn btn-primary btn-md ml-2")
 quizAgain.setAttribute("id", "quizAgainBut")
+clearScores.setAttribute("Class", "btn btn-primary btn-md ml-2")
 
 // Functions
 function startQuiz(event) {
@@ -86,7 +88,6 @@ function startQuiz(event) {
         score = 0
         availableQuestions = [...quesArray]
         getNewQuestion();
-        // questionFunc1();
         startBtn.style.display = 'none';
         ansDiv.appendChild(ansA)
         ansDiv.appendChild(ansB)
@@ -97,8 +98,9 @@ function startQuiz(event) {
 }
 function getNewQuestion() {
     // if no questions or finished all questions go to end page add this back after
-    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS || secondsLeft === 0 || secondsLeft < 0) {
         localStorage.setItem('mostRecentScore', score)
+        console.log(score)
         setTimeout(() => {
             nameInput();
         }, 1000)
@@ -177,6 +179,7 @@ function logScore (event) {
     ansSec.appendChild(quizAgain);
     quizAgain.textContent = "Take Quiz Again";
     nameEndInput.textContent = "Click Take Quiz Again button to restart or Highscores button to see the scores."
+    
     questions.style.display = "none";
     ansA.style.display = 'none';
     ansB.style.display = 'none';
@@ -184,12 +187,14 @@ function logScore (event) {
     ansD.style.display = 'none';
     userName.style.display = 'none';
     userSubmit.style.display = 'none';
+
+    return;
 }
 
 function showScores(event) {
     event.preventDefault();
     title.textContent = "Highscores";
-    nameEndInput.textContent = localStorage.getItem('highScores');
+    nameEndInput.style.display = 'none';
     questions.style.display = "none";
     ansA.style.display = 'none';
     ansB.style.display = 'none';
@@ -197,10 +202,32 @@ function showScores(event) {
     ansD.style.display = 'none';
     userName.style.display = 'none';
     userSubmit.style.display = 'none';
+    startBtn.style.display = 'none';
+    ansSec.appendChild(quizAgain);
+    quizAgain.textContent = "Take Quiz Again";
+    ansSec.appendChild(clearScores);
+    clearScores.textContent = "Clear Scores"
+
+    if(highScoresList.children.length === 0) {
+        for (let i = 0; i < highScores.length; i++) {
+            let highScoresLi = document.createElement('li')
+            highScoresLi.setAttribute("Class", "list-group-item")
+            highScoresLi.append(highScores[i].name + ": " + highScores[i].score);
+            highScoresList.appendChild(highScoresLi)
+        }
+    }
+    else {}
+    
 }
 
 function resetQuiz(event) {
     event.preventDefault();
+    location.reload();
+}
+
+function clear(event) {
+    event.preventDefault();
+    localStorage.clear();
     location.reload();
 }
 
@@ -210,6 +237,7 @@ function setTime() {
       timeEl.textContent = "Time: " + secondsLeft;
   
       if(secondsLeft === 0 || secondsLeft < 0) {
+        localStorage.setItem('mostRecentScore', score)
         clearInterval(timerInterval);
         nameInput();
         console.log("Done");
@@ -224,6 +252,7 @@ ansDiv.addEventListener("click", checkAnswer);
 userSubmit.addEventListener("click", logScore);
 hsLink.addEventListener("click", showScores);
 quizAgain.addEventListener("click", resetQuiz);
+clearScores.addEventListener("click", clear);
 // make this refresh the page
 
 // Other Scripts
