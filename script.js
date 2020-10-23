@@ -11,7 +11,7 @@ const nameEndInput = document.querySelector('#nameEnd')
 const highScoresList = document.querySelector('#highScoresUl')
 
 // Variables for functions
-let secondsLeft = 60
+let secondsLeft = 5
 let quesArray = [
     {question: "Bootstrap helps with?",
     answerA: "Styling",
@@ -207,6 +207,7 @@ function showScores(event) {
     quizAgain.textContent = "Take Quiz Again";
     ansSec.appendChild(clearScores);
     clearScores.textContent = "Clear Scores"
+    quesResponse.textContent = "Get the top score!"
 
     if(highScoresList.children.length === 0) {
         for (let i = 0; i < highScores.length; i++) {
@@ -238,6 +239,7 @@ function setTime() {
   
       if(secondsLeft === 0 || secondsLeft < 0) {
         localStorage.setItem('mostRecentScore', score)
+        timeEl.textContent = "Time: "
         clearInterval(timerInterval);
         nameInput();
         console.log("Done");

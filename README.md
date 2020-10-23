@@ -4,9 +4,9 @@
 
 ### Summary
 
-This repository contains a quiz powered by Javascript. This quiz utilizes Javascript to
+This repository contains a quiz powered by Javascript. This quiz utilizes Javascript to:
 
-- Sets a timer for the quiz when the start button is pressed
+- Set a timer for the quiz when the start button is pressed
 - Cycles through 5 preset multiple choice questions
 - Saves your score to localStorage
 - Allows the user to clear Highscores if desired
@@ -19,16 +19,19 @@ This is a 1 minute timed quiz. As the user answers each question the quiz will v
 
 Website URL: https://jrkrichards.github.io/js_powered_quiz/
 
-### Password Generator:
+### Coding Quiz:
 
 Start:
-![Image of Start](./Assets/Start.PNG)
+![Image of Start](./Assets/Quiz_start.PNG)
 
-Length:
-![Image of Length Prompt](./Assets/Length.PNG)
+Questions:
+![Image of Questions](./Assets/Questions.PNG)
 
-Characters:
-![Image of Character Prompt](./Assets/Characters.PNG)
+Score Submission:
+![Image of Score Submission](./Assets/Score_submission.PNG)
 
 End:
 ![Image of End](./Assets/End.PNG)
+
+End:
+![Image of Highscores](./Assets/Highscores.PNG)
