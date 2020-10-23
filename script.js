@@ -11,7 +11,7 @@ const nameEndInput = document.querySelector('#nameEnd')
 const highScoresList = document.querySelector('#highScoresUl')
 
 // Variables for functions
-let secondsLeft = 5
+let secondsLeft = 60
 let quesArray = [
     {question: "Bootstrap helps with?",
     answerA: "Styling",
@@ -52,7 +52,6 @@ let availableQuestions = [];
 const SCORE_POINTS = 100
 const MAX_QUESTIONS = 5
 const highScores = JSON.parse(localStorage.getItem('highScores')) || []
-let ansArray = ["answer_a", "answer_c", "answer_a", "answer_b", "answer_d"]
 let ansA = document.createElement('button');
 let ansB = document.createElement('button');
 let ansC = document.createElement('button');
@@ -96,11 +95,29 @@ function startQuiz(event) {
         return;   
     }
 }
+
+function setTime() {
+    let timerInterval = setInterval(function() {
+      secondsLeft--;
+      timeEl.textContent = "Time: " + secondsLeft;
+  
+      if(secondsLeft === 0 || secondsLeft < 0) {
+        localStorage.setItem('mostRecentScore', score)
+        timeEl.textContent = "Time: "
+        clearInterval(timerInterval);
+        nameInput();
+        console.log("Done");
+      }
+  
+    }, 1000);
+  }
+
 function getNewQuestion() {
     // if no questions or finished all questions go to end page add this back after
-    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS || secondsLeft === 0 || secondsLeft < 0) {
+    console.log(questionCounter)
+    if(questionCounter >= MAX_QUESTIONS || secondsLeft === 0 || secondsLeft < 0) {
         localStorage.setItem('mostRecentScore', score)
-        console.log(score)
+        secondsLeft = 0
         setTimeout(() => {
             nameInput();
         }, 1000)
@@ -231,22 +248,6 @@ function clear(event) {
     localStorage.clear();
     location.reload();
 }
-
-function setTime() {
-    let timerInterval = setInterval(function() {
-      secondsLeft--;
-      timeEl.textContent = "Time: " + secondsLeft;
-  
-      if(secondsLeft === 0 || secondsLeft < 0) {
-        localStorage.setItem('mostRecentScore', score)
-        timeEl.textContent = "Time: "
-        clearInterval(timerInterval);
-        nameInput();
-        console.log("Done");
-      }
-  
-    }, 1000);
-  }
 
 // Event Listeners
 startBtn.addEventListener("click", startQuiz);
