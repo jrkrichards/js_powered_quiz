@@ -96,6 +96,7 @@ function startQuiz(event) {
     }
 }
 
+// This funtion controls the timer and records the score to local memory. When finished this will take the user to the score submission page.
 function setTime() {
     let timerInterval = setInterval(function() {
       secondsLeft--;
@@ -106,12 +107,12 @@ function setTime() {
         timeEl.textContent = "Time: "
         clearInterval(timerInterval);
         nameInput();
-        console.log("Done");
       }
   
     }, 1000);
   }
 
+// This funtion cycles through each of the questions. This quiz is currently set to have a max of 5 questions. 
 function getNewQuestion() {
     // if no questions or finished all questions go to end page add this back after
     console.log(questionCounter)
@@ -132,12 +133,12 @@ function getNewQuestion() {
         ansD.textContent = currentQuestion.answerD;
 
         let choices = [currentQuestion.answerA, currentQuestion.answerB, currentQuestion.answerC, currentQuestion.answerD]
-        console.log(choices)
         acceptingAnswers = true
         questionCounter++
     }
 };
 
+// This function checks to verify if the answer is correct or not. If it is correct it will trigger the increment score function and if it is incorrect it will subtract 10 seconds from the timer. You can control the amount of points by adjusting the "SCORE POINTS" variable.
 function checkAnswer (event) {
     event.preventDefault();
         if(!acceptingAnswers) return
@@ -148,12 +149,10 @@ function checkAnswer (event) {
         if(selectedChoice === correctAnswer) {
             quesResponse.textContent = "Right!";
             incrementScore(SCORE_POINTS);
-            console.log(score)
         }
         else {
             quesResponse.textContent = "Wrong!"
             secondsLeft = secondsLeft-10;
-            console.log(score)
         }
         setTimeout(() => {
             getNewQuestion();
@@ -164,6 +163,7 @@ function incrementScore(num) {
     score +=num
 }
 
+// This function allows the user to submit their score.
 function nameInput() {
     title.textContent = "Quiz Finished";
     questions.style.display = "none";
@@ -178,6 +178,7 @@ function nameInput() {
     quesResponse.textContent = "Congrats on finishing!"
 }
 
+// This function store the score in local memory as an object. 
 function logScore (event) {
     event.preventDefault();
     localStorage.setItem('mostRecentUser', document.getElementById('currentUser').value)
@@ -208,6 +209,7 @@ function logScore (event) {
     return;
 }
 
+// This functions shows all of the score on the highscores page by iterating throught the highscores array, which includes the scores object.
 function showScores(event) {
     event.preventDefault();
     title.textContent = "Highscores";
@@ -225,6 +227,7 @@ function showScores(event) {
     ansSec.appendChild(clearScores);
     clearScores.textContent = "Clear Scores"
     quesResponse.textContent = "Get the top score!"
+    secondsLeft = 0
 
     if(highScoresList.children.length === 0) {
         for (let i = 0; i < highScores.length; i++) {
@@ -256,6 +259,3 @@ userSubmit.addEventListener("click", logScore);
 hsLink.addEventListener("click", showScores);
 quizAgain.addEventListener("click", resetQuiz);
 clearScores.addEventListener("click", clear);
-// make this refresh the page
-
-// Other Scripts
